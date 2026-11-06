@@ -14,3 +14,7 @@ test("recent sessions table uses scoped column headings", () => {
   assert.equal((html.match(/<th scope="col">/g) ?? []).length, 4);
 });
 
+test("session export is an explicit button action", () => {
+  assert.match(html, /<button class="secondary-button" id="export-sessions" type="button">Download CSV<\/button>/);
+});
+
