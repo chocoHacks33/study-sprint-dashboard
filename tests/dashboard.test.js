@@ -1,7 +1,13 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import { escapeHtml, formatDuration, minutesByDay, summarizeSessions } from "../src/dashboard.js";
+import {
+  calculateStudyStreak,
+  escapeHtml,
+  formatDuration,
+  minutesByDay,
+  summarizeSessions
+} from "../src/dashboard.js";
 
 const sampleSessions = [
   { course: "Algorithms", date: "2026-11-01", minutes: 40 },
@@ -40,5 +46,22 @@ test("formatDuration produces compact hour and minute labels", () => {
 
 test("escapeHtml protects values inserted into the session table", () => {
   assert.equal(escapeHtml('<script title="x">&'), "&lt;script title=&quot;x&quot;&gt;&amp;");
+});
+
+test("calculateStudyStreak counts consecutive unique study dates", () => {
+  const sessions = [
+    { date: "2026-11-01" },
+    { date: "2026-11-03" },
+    { date: "2026-11-04" },
+    { date: "2026-11-04" },
+    { date: "2026-11-05" }
+  ];
+
+  assert.equal(calculateStudyStreak(sessions), 3);
+  assert.equal(calculateStudyStreak([]), 0);
+});
+
+test("calculateStudyStreak ignores malformed date values", () => {
+  assert.equal(calculateStudyStreak([{ date: "not-a-date" }]), 0);
 });
 
