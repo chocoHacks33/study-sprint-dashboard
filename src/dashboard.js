@@ -51,6 +51,23 @@ export function minutesByDay(studySessions) {
     .map(([date, minutes]) => ({ date, minutes }));
 }
 
+export function courseBreakdown(studySessions) {
+  const totalMinutes = studySessions.reduce((sum, session) => sum + session.minutes, 0);
+  const totals = new Map();
+
+  for (const session of studySessions) {
+    totals.set(session.course, (totals.get(session.course) ?? 0) + session.minutes);
+  }
+
+  return [...totals.entries()]
+    .map(([course, minutes]) => ({
+      course,
+      minutes,
+      percentage: totalMinutes === 0 ? 0 : Math.round((minutes / totalMinutes) * 100)
+    }))
+    .sort((left, right) => right.minutes - left.minutes || left.course.localeCompare(right.course));
+}
+
 function renderMetrics(studySessions) {
   const summary = summarizeSessions(studySessions);
   const metrics = [
@@ -105,9 +122,32 @@ function renderRows(studySessions) {
     .join("");
 }
 
+function renderWorkload(studySessions) {
+  return courseBreakdown(studySessions)
+    .map(
+      ({ course, minutes, percentage }) => `
+        <div class="workload-row">
+          <span class="workload-course">${escapeHtml(course)}</span>
+          <div
+            class="workload-track"
+            role="progressbar"
+            aria-label="${escapeHtml(course)} share of study time"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="${percentage}"
+          >
+            <span class="workload-fill" style="width: ${percentage}%"></span>
+          </div>
+          <span class="workload-value">${formatDuration(minutes)} · ${percentage}%</span>
+        </div>`
+    )
+    .join("");
+}
+
 export function renderDashboard(studySessions, root = document) {
   root.querySelector("#metric-grid").innerHTML = renderMetrics(studySessions);
   root.querySelector("#study-chart").innerHTML = renderChart(studySessions);
+  root.querySelector("#workload-chart").innerHTML = renderWorkload(studySessions);
   root.querySelector("#session-rows").innerHTML = renderRows(studySessions);
   root.querySelector("#session-count").textContent = `${studySessions.length} sessions`;
 
