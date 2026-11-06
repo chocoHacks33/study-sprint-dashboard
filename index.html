@@ -45,7 +45,13 @@
             <p class="eyebrow">Activity</p>
             <h2 id="sessions-title">Recent sessions</h2>
           </div>
-          <p class="panel-note" id="session-count"></p>
+          <div class="session-tools">
+            <label for="course-filter">Course</label>
+            <select id="course-filter">
+              <option value="all">All courses</option>
+            </select>
+            <p class="panel-note" id="session-count" aria-live="polite"></p>
+          </div>
         </div>
         <div class="table-wrap">
           <table>

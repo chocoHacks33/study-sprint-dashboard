@@ -108,6 +108,33 @@ main {
   font-size: 0.9rem;
 }
 
+.session-tools {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.session-tools label {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.session-tools select {
+  max-width: 12rem;
+  padding: 0.55rem 2rem 0.55rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 0.65rem;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+}
+
+.session-tools select:focus-visible {
+  outline: 3px solid rgba(23, 107, 73, 0.28);
+  outline-offset: 2px;
+}
+
 .metric-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -241,6 +268,16 @@ footer {
 
   .metric-grid {
     grid-template-columns: 1fr;
+  }
+
+  .section-heading,
+  .session-tools {
+    align-items: flex-start;
+  }
+
+  .session-tools {
+    flex-wrap: wrap;
+    justify-content: flex-end;
   }
 
   .study-chart {

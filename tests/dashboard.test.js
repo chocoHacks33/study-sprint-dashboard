@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import { escapeHtml, formatDuration, minutesByDay, summarizeSessions } from "../src/dashboard.js";
+import { escapeHtml, filterSessions, formatDuration, minutesByDay, summarizeSessions } from "../src/dashboard.js";
 
 const sampleSessions = [
   { course: "Algorithms", date: "2026-11-01", minutes: 40 },
@@ -40,5 +40,13 @@ test("formatDuration produces compact hour and minute labels", () => {
 
 test("escapeHtml protects values inserted into the session table", () => {
   assert.equal(escapeHtml('<script title="x">&'), "&lt;script title=&quot;x&quot;&gt;&amp;");
+});
+
+test("filterSessions narrows sessions by course without changing the source", () => {
+  const filtered = filterSessions(sampleSessions, "Databases");
+
+  assert.deepEqual(filtered, [sampleSessions[1]]);
+  assert.equal(sampleSessions.length, 3);
+  assert.notEqual(filterSessions(sampleSessions, "all"), sampleSessions);
 });
 
