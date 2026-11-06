@@ -14,3 +14,8 @@ test("recent sessions table uses scoped column headings", () => {
   assert.equal((html.match(/<th scope="col">/g) ?? []).length, 4);
 });
 
+test("course filter has a visible label and an all-courses default", () => {
+  assert.match(html, /<label for="course-filter">Course<\/label>/);
+  assert.match(html, /<option value="all">All courses<\/option>/);
+});
+

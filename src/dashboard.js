@@ -51,6 +51,11 @@ export function minutesByDay(studySessions) {
     .map(([date, minutes]) => ({ date, minutes }));
 }
 
+export function filterSessions(studySessions, course) {
+  if (!course || course === "all") return [...studySessions];
+  return studySessions.filter((session) => session.course === course);
+}
+
 function renderMetrics(studySessions) {
   const summary = summarizeSessions(studySessions);
   const metrics = [
