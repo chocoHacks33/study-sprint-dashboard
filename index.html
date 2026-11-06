@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Review recent study sessions and focused learning time." />
+    <title>Study Sprint Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div>
+        <p class="eyebrow">Learning overview</p>
+        <h1>Study Sprint</h1>
+        <p class="subtitle">See where your focused learning time went this week.</p>
+      </div>
+      <span class="week-label" id="week-label">Recent sessions</span>
+    </header>
+
+    <main>
+      <section aria-labelledby="summary-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">At a glance</p>
+            <h2 id="summary-title">Study summary</h2>
+          </div>
+        </div>
+        <div class="metric-grid" id="metric-grid"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="rhythm-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Daily rhythm</p>
+            <h2 id="rhythm-title">Minutes studied</h2>
+          </div>
+          <p class="panel-note">Last seven study days</p>
+        </div>
+        <div class="study-chart" id="study-chart"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="sessions-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Activity</p>
+            <h2 id="sessions-title">Recent sessions</h2>
+          </div>
+          <p class="panel-note" id="session-count"></p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Course</th>
+                <th scope="col">Topic</th>
+                <th scope="col">Date</th>
+                <th scope="col">Duration</th>
+              </tr>
+            </thead>
+            <tbody id="session-rows"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <footer>Study data is stored in this starter dataset only.</footer>
+    <script type="module" src="src/app.js"></script>
+  </body>
+</html>
+

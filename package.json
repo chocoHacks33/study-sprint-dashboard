@@ -1,0 +1,11 @@
+{
+  "name": "study-sprint-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "check": "node --check src/data.js && node --check src/dashboard.js && node --check src/app.js"
+  }
+}
+
