@@ -108,6 +108,33 @@ main {
   font-size: 0.9rem;
 }
 
+.session-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.secondary-button {
+  padding: 0.6rem 0.85rem;
+  border: 1px solid var(--accent);
+  border-radius: 0.7rem;
+  background: var(--surface);
+  color: var(--accent-strong);
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.secondary-button:hover {
+  background: var(--accent-soft);
+}
+
+.secondary-button:focus-visible {
+  outline: 3px solid rgba(23, 107, 73, 0.28);
+  outline-offset: 2px;
+}
+
 .metric-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -241,6 +268,11 @@ footer {
 
   .metric-grid {
     grid-template-columns: 1fr;
+  }
+
+  .session-actions {
+    align-items: flex-end;
+    flex-direction: column;
   }
 
   .study-chart {
