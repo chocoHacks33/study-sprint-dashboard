@@ -14,3 +14,9 @@ test("recent sessions table uses scoped column headings", () => {
   assert.equal((html.match(/<th scope="col">/g) ?? []).length, 4);
 });
 
+test("weekly goal control is labelled and exposes progress", () => {
+  assert.match(html, /<label for="weekly-goal">Goal in minutes<\/label>/);
+  assert.match(html, /<progress id="goal-progress"/);
+  assert.match(html, /id="goal-status" aria-live="polite"/);
+});
+

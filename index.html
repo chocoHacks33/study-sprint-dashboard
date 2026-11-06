@@ -28,6 +28,19 @@
         <div class="metric-grid" id="metric-grid"></div>
       </section>
 
+      <section class="panel goal-panel" aria-labelledby="goal-title">
+        <div>
+          <p class="eyebrow">Weekly target</p>
+          <h2 id="goal-title">Focused-time goal</h2>
+          <p class="goal-status" id="goal-status" aria-live="polite"></p>
+        </div>
+        <div class="goal-meter">
+          <label for="weekly-goal">Goal in minutes</label>
+          <input id="weekly-goal" type="number" min="60" max="2400" step="30" inputmode="numeric" />
+          <progress id="goal-progress" max="100" value="0">0%</progress>
+        </div>
+      </section>
+
       <section class="panel" aria-labelledby="rhythm-title">
         <div class="section-heading">
           <div>

@@ -145,6 +145,69 @@ main {
   padding: clamp(1rem, 3vw, 1.5rem);
 }
 
+.goal-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(16rem, 1fr);
+  align-items: center;
+  gap: 2rem;
+}
+
+.goal-status {
+  margin: 0.55rem 0 0;
+  color: var(--muted);
+}
+
+.goal-meter {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.65rem 1rem;
+}
+
+.goal-meter label {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.goal-meter input {
+  width: 6.5rem;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid var(--line);
+  border-radius: 0.65rem;
+  color: var(--ink);
+  font: inherit;
+}
+
+.goal-meter input:focus-visible {
+  outline: 3px solid rgba(23, 107, 73, 0.28);
+  outline-offset: 2px;
+}
+
+.goal-meter progress {
+  grid-column: 1 / -1;
+  width: 100%;
+  height: 0.85rem;
+  overflow: hidden;
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent-soft);
+}
+
+.goal-meter progress::-webkit-progress-bar {
+  background: var(--accent-soft);
+}
+
+.goal-meter progress::-webkit-progress-value {
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.goal-meter progress::-moz-progress-bar {
+  border-radius: 999px;
+  background: var(--accent);
+}
+
 .study-chart {
   display: grid;
   grid-template-columns: repeat(7, minmax(2.5rem, 1fr));
@@ -241,6 +304,11 @@ footer {
 
   .metric-grid {
     grid-template-columns: 1fr;
+  }
+
+  .goal-panel {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
   }
 
   .study-chart {
