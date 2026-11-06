@@ -110,7 +110,7 @@ main {
 
 .metric-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1rem;
 }
 
@@ -250,6 +250,12 @@ footer {
   th,
   td {
     padding-inline: 0.45rem;
+  }
+}
+
+@media (min-width: 681px) and (max-width: 900px) {
+  .metric-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

@@ -51,12 +51,34 @@ export function minutesByDay(studySessions) {
     .map(([date, minutes]) => ({ date, minutes }));
 }
 
+export function calculateStudyStreak(studySessions) {
+  const studyDates = new Set(
+    studySessions
+      .map((session) => session.date)
+      .filter((date) => /^\d{4}-\d{2}-\d{2}$/.test(date))
+  );
+
+  if (studyDates.size === 0) return 0;
+
+  const latestDate = [...studyDates].sort().at(-1);
+  const cursor = new Date(`${latestDate}T00:00:00Z`);
+  let streak = 0;
+
+  while (studyDates.has(cursor.toISOString().slice(0, 10))) {
+    streak += 1;
+    cursor.setUTCDate(cursor.getUTCDate() - 1);
+  }
+
+  return streak;
+}
+
 function renderMetrics(studySessions) {
   const summary = summarizeSessions(studySessions);
   const metrics = [
     ["Focused time", formatDuration(summary.totalMinutes)],
     ["Active courses", String(summary.courseCount)],
-    ["Average session", formatDuration(summary.averageMinutes)]
+    ["Average session", formatDuration(summary.averageMinutes)],
+    ["Latest streak", `${calculateStudyStreak(studySessions)} days`]
   ];
 
   return metrics
