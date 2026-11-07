@@ -51,6 +51,21 @@ export function minutesByDay(studySessions) {
     .map(([date, minutes]) => ({ date, minutes }));
 }
 
+export function sortSessions(studySessions, sortKey = "date-desc") {
+  const comparators = {
+    "date-desc": (left, right) => right.date.localeCompare(left.date),
+    "date-asc": (left, right) => left.date.localeCompare(right.date),
+    "duration-desc": (left, right) => right.minutes - left.minutes,
+    "course-asc": (left, right) => left.course.localeCompare(right.course, "en-SG")
+  };
+  const compare = comparators[sortKey] ?? comparators["date-desc"];
+
+  return studySessions
+    .map((session, index) => ({ session, index }))
+    .sort((left, right) => compare(left.session, right.session) || left.index - right.index)
+    .map(({ session }) => session);
+}
+
 function renderMetrics(studySessions) {
   const summary = summarizeSessions(studySessions);
   const metrics = [
@@ -90,9 +105,8 @@ function renderChart(studySessions) {
     .join("");
 }
 
-function renderRows(studySessions) {
-  return [...studySessions]
-    .sort((left, right) => right.date.localeCompare(left.date))
+function renderRows(studySessions, sortKey) {
+  return sortSessions(studySessions, sortKey)
     .map(
       (session) => `
         <tr>
@@ -105,10 +119,10 @@ function renderRows(studySessions) {
     .join("");
 }
 
-export function renderDashboard(studySessions, root = document) {
+export function renderDashboard(studySessions, root = document, sortKey = "date-desc") {
   root.querySelector("#metric-grid").innerHTML = renderMetrics(studySessions);
   root.querySelector("#study-chart").innerHTML = renderChart(studySessions);
-  root.querySelector("#session-rows").innerHTML = renderRows(studySessions);
+  root.querySelector("#session-rows").innerHTML = renderRows(studySessions, sortKey);
   root.querySelector("#session-count").textContent = `${studySessions.length} sessions`;
 
   const dates = minutesByDay(studySessions);
