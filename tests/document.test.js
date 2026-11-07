@@ -14,3 +14,7 @@ test("recent sessions table uses scoped column headings", () => {
   assert.equal((html.match(/<th scope="col">/g) ?? []).length, 4);
 });
 
+test("document includes an explicit print report action", () => {
+  assert.match(html, /<button[^>]+id="print-dashboard"[^>]+type="button"/);
+});
+

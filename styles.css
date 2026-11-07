@@ -90,6 +90,34 @@ footer {
   font-weight: 700;
 }
 
+.header-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.print-button {
+  padding: 0.65rem 0.9rem;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  background: var(--accent);
+  color: #ffffff;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.print-button:hover {
+  background: var(--accent-strong);
+}
+
+.print-button:focus-visible {
+  outline: 3px solid rgba(23, 107, 73, 0.25);
+  outline-offset: 3px;
+}
+
 main {
   display: grid;
   gap: 1.25rem;
@@ -239,6 +267,10 @@ footer {
     justify-self: start;
   }
 
+  .header-actions {
+    justify-content: space-between;
+  }
+
   .metric-grid {
     grid-template-columns: 1fr;
   }
@@ -250,6 +282,52 @@ footer {
   th,
   td {
     padding-inline: 0.45rem;
+  }
+}
+
+@media print {
+  :root {
+    color: #111111;
+    background: #ffffff;
+  }
+
+  body {
+    background: #ffffff;
+  }
+
+  .site-header,
+  main,
+  footer {
+    width: 100%;
+  }
+
+  .site-header {
+    padding: 0 0 1.25rem;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  .print-button,
+  footer {
+    display: none;
+  }
+
+  .metric-card,
+  .panel {
+    break-inside: avoid;
+    border-color: #b8b8b8;
+    box-shadow: none;
+  }
+
+  .chart-bar {
+    background: #176b49;
+    print-color-adjust: exact;
+  }
+
+  .table-wrap {
+    overflow: visible;
   }
 }
 
