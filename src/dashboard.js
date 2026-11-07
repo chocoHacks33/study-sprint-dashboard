@@ -90,16 +90,16 @@ function renderChart(studySessions) {
     .join("");
 }
 
-function renderRows(studySessions) {
+export function renderSessionRows(studySessions) {
   return [...studySessions]
     .sort((left, right) => right.date.localeCompare(left.date))
     .map(
       (session) => `
         <tr>
-          <td><span class="course-pill">${escapeHtml(session.course)}</span></td>
-          <td>${escapeHtml(session.topic)}</td>
-          <td>${dateFormatter.format(new Date(`${session.date}T00:00:00Z`))}</td>
-          <td>${formatDuration(session.minutes)}</td>
+          <td data-label="Course"><span class="course-pill">${escapeHtml(session.course)}</span></td>
+          <td data-label="Topic">${escapeHtml(session.topic)}</td>
+          <td data-label="Date">${dateFormatter.format(new Date(`${session.date}T00:00:00Z`))}</td>
+          <td data-label="Duration">${formatDuration(session.minutes)}</td>
         </tr>`
     )
     .join("");
@@ -108,7 +108,7 @@ function renderRows(studySessions) {
 export function renderDashboard(studySessions, root = document) {
   root.querySelector("#metric-grid").innerHTML = renderMetrics(studySessions);
   root.querySelector("#study-chart").innerHTML = renderChart(studySessions);
-  root.querySelector("#session-rows").innerHTML = renderRows(studySessions);
+  root.querySelector("#session-rows").innerHTML = renderSessionRows(studySessions);
   root.querySelector("#session-count").textContent = `${studySessions.length} sessions`;
 
   const dates = minutesByDay(studySessions);
