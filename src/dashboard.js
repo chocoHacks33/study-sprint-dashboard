@@ -51,6 +51,19 @@ export function minutesByDay(studySessions) {
     .map(([date, minutes]) => ({ date, minutes }));
 }
 
+export function durationBreakdown(studySessions) {
+  return studySessions.reduce(
+    (breakdown, session) => {
+      if (session.minutes < 45) breakdown.quick += 1;
+      else if (session.minutes < 70) breakdown.focused += 1;
+      else breakdown.deep += 1;
+      breakdown.total += 1;
+      return breakdown;
+    },
+    { quick: 0, focused: 0, deep: 0, total: 0 }
+  );
+}
+
 function renderMetrics(studySessions) {
   const summary = summarizeSessions(studySessions);
   const metrics = [
@@ -105,11 +118,39 @@ function renderRows(studySessions) {
     .join("");
 }
 
+function renderDurationBreakdown(studySessions) {
+  const breakdown = durationBreakdown(studySessions);
+  const maximum = Math.max(breakdown.total, 1);
+  const bands = [
+    ["Quick review", "Under 45 minutes", breakdown.quick],
+    ["Focused block", "45–69 minutes", breakdown.focused],
+    ["Deep session", "70+ minutes", breakdown.deep]
+  ];
+
+  return bands
+    .map(([label, range, count]) => {
+      const width = Math.round((count / maximum) * 100);
+      const sessionLabel = count === 1 ? "session" : "sessions";
+      return `
+        <div class="duration-band">
+          <div class="duration-heading">
+            <span><strong>${label}</strong><small>${range}</small></span>
+            <span>${count} ${sessionLabel}</span>
+          </div>
+          <div class="duration-track" role="progressbar" aria-label="${label}" aria-valuemin="0" aria-valuemax="${breakdown.total}" aria-valuenow="${count}">
+            <span class="duration-fill" style="width: ${width}%"></span>
+          </div>
+        </div>`;
+    })
+    .join("");
+}
+
 export function renderDashboard(studySessions, root = document) {
   root.querySelector("#metric-grid").innerHTML = renderMetrics(studySessions);
   root.querySelector("#study-chart").innerHTML = renderChart(studySessions);
   root.querySelector("#session-rows").innerHTML = renderRows(studySessions);
   root.querySelector("#session-count").textContent = `${studySessions.length} sessions`;
+  root.querySelector("#duration-breakdown").innerHTML = renderDurationBreakdown(studySessions);
 
   const dates = minutesByDay(studySessions);
   if (dates.length > 0) {

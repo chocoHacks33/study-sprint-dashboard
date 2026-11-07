@@ -5,7 +5,7 @@ import { readFile } from "node:fs/promises";
 const html = await readFile(new URL("../index.html", import.meta.url), "utf8");
 
 test("document exposes the dashboard regions used by the renderer", () => {
-  for (const id of ["metric-grid", "study-chart", "session-rows", "session-count", "week-label"]) {
+  for (const id of ["metric-grid", "study-chart", "duration-breakdown", "session-rows", "session-count", "week-label"]) {
     assert.match(html, new RegExp(`id=["']${id}["']`));
   }
 });
