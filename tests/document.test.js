@@ -14,3 +14,9 @@ test("recent sessions table uses scoped column headings", () => {
   assert.equal((html.match(/<th scope="col">/g) ?? []).length, 4);
 });
 
+test("session search exposes a labeled input and live result status", () => {
+  assert.match(html, /for="session-search"/);
+  assert.match(html, /id="session-search" type="search"/);
+  assert.match(html, /id="session-search-status" aria-live="polite"/);
+});
+

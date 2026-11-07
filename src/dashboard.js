@@ -51,6 +51,17 @@ export function minutesByDay(studySessions) {
     .map(([date, minutes]) => ({ date, minutes }));
 }
 
+export function filterSessions(studySessions, query) {
+  const normalizedQuery = String(query).trim().toLocaleLowerCase("en-SG");
+  if (normalizedQuery === "") return [...studySessions];
+
+  return studySessions.filter((session) =>
+    [session.course, session.topic].some((value) =>
+      String(value).toLocaleLowerCase("en-SG").includes(normalizedQuery)
+    )
+  );
+}
+
 function renderMetrics(studySessions) {
   const summary = summarizeSessions(studySessions);
   const metrics = [
