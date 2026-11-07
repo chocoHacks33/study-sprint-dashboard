@@ -45,8 +45,15 @@
             <p class="eyebrow">Activity</p>
             <h2 id="sessions-title">Recent sessions</h2>
           </div>
-          <p class="panel-note" id="session-count"></p>
+          <div class="session-tools">
+            <label class="session-search" for="session-search">
+              <span>Search sessions</span>
+              <input id="session-search" type="search" placeholder="Course or topic" autocomplete="off" />
+            </label>
+            <p class="panel-note" id="session-count"></p>
+          </div>
         </div>
+        <p class="visually-hidden" id="session-search-status" aria-live="polite"></p>
         <div class="table-wrap">
           <table>
             <thead>
