@@ -14,3 +14,10 @@ test("recent sessions table uses scoped column headings", () => {
   assert.equal((html.match(/<th scope="col">/g) ?? []).length, 4);
 });
 
+test("session sorting offers all supported orderings", () => {
+  assert.match(html, /id="session-sort"/);
+  for (const value of ["date-desc", "date-asc", "duration-desc", "course-asc"]) {
+    assert.match(html, new RegExp(`value=["']${value}["']`));
+  }
+});
+
